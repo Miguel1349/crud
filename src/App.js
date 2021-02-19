@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { isEmpty } from 'lodash';
+import { isEmpty, size } from 'lodash';
 import shortid from 'shortid';
 
 function App() {
@@ -8,8 +8,7 @@ function App() {
 
   const addTask = (e) => {
     e.preventDefault();
-    if(isEmpty(task)) {
-      console.log('Task Empty');
+    if(!validForm()) {
       return;
     }
     const newTask = {
@@ -27,25 +26,25 @@ function App() {
       <div className="row">
         <div className="col-8">
           <h4 className="text-center">Lista de Tareas</h4>
-          <ul className="list-group">
-            {
-              tasks.map((task) => (
-                <li className="list-group-item" key={task.id}>
-                  <span className="lead">{task.name}</span>
-                  <button className="btn btn-danger btn-sm float-right mx-2">
-                    Eliminar
-                  </button>
-                  <button className="btn btn-warning btn-sm float-right">
-                    Editar
-                  </button>
-                </li>
-              ))
-            }
-          </ul>
+              <ul className="list-group">
+                {
+                  tasks.map((task) => (
+                    <li className="list-group-item" key={task.id}>
+                      <span className="lead">{task.name}</span>
+                      <button
+                        Eliminar
+                      </button>
+                      <button
+                        Editar
+                      </button>
+                    </li>
+                  ))
+                }
+              </ul>
         </div>
         <div className="col-4">
-          <h4 className="text-center">Formulario</h4>
-          <form onSubmit={addTask}>
+          <h4 className="text-center">
+            { editMode ? 'Editar Tarea' : 'Agregar Tarea' }
             <input
               type="text"
               className="form-control mb-2"
@@ -53,8 +52,8 @@ function App() {
               onChange={(text) => setTask(text.target.value)}
               value={task}
             />
-            <button className="btn btn-dark btn-block" type="submit">
-              Agregar
+            <button
+              className={ editMode ? "btn btn-warning btn-block" : "btn btn-dark btn-block" }
             </button>
           </form>
         </div>
